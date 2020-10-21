@@ -37,13 +37,14 @@ Cette partie du TP est découpée en 4 grandes parties avec pour chacune des par
 ##### En quoi consiste l’approche Shotgun proteomics?
 
 ```
-
+Par une approche Bottom-up, les protéines vont être digérées en peptides. Ces peptides seront séparés par chromatographie liquide puis séquencé par spectrométrie de masse (MS)
 ```
 
 ##### Quel est l’objectif de cette approche ?
 
 ```
-
+Identifier les protéines dans un échantillon par MS par bottom up (réduction de la complexité de l'échantillon par digestion par la trypsine) différent de top down où elles sont entières.
+Trouver des biomarqueurs : comparer des conditions pour voir la sur ou sous expression d'un ou plusieurs peptide(s) spécifique(s)
 ```
 
 #### Procédure
@@ -59,38 +60,38 @@ Cette partie du TP est découpée en 4 grandes parties avec pour chacune des par
 ##### L’identification des protéines/ peptides se réalise grâce à une base de données de protéines. Quelle comparaison va être effectuée?
 
 ```
-
+comparer des listes de peptides trypsiques d'une BDD face à nos peptides trypsiques expérimentaux
 ```
 
 ##### Existe t’il d’autres types de bases de données pour réaliser l’identification des peptides trypsiques dans un spectre?
 
 ```
-
+Librairie spectral (comparaison par homologie); protéogénomie en partant du transcriptome
 ```
 
 ##### Est-ce qu’il est possible d’identifier des peptides sans base de données?
 ```
-
+Oui avec une librairie spectrale
 ```
 ##### Combien de protéines sont identifiées dans le protéome bactérien?
 ```
-
+4391 sur Uniprot pour la souche K12
 ```
 ##### Comment la liste des séquences des protéines est-elle établie ? Est-elle complète? 
 ```
-
+Cette liste de séquence provient des BDD Swissprot et TremBL. Elles rassemblent toutes les informations sur les protéines trouvées et annotées lors de précédentes analyses sur cette souche. Non il reste toujours des choses à découvrir.
 ```
 ##### Quelle est la différence entre des séquences Swiss-prot et TremBL?
 ```
-
+swiss prot est annoté et purée manuellement (plus fiable) trembl est de l'annotation auto
 ```
 ##### A quoi correspond la protéine P00761 et quelle est sa fonction ? 
 ```
-
+C'est la trypsine. C'est notre enzyme de digestion qui va cliver après les AA Lysine et Arginine
 ```
 ##### Pourquoi doit-on rajouter cette protéine dans le fichier FASTA final du protéome bactérien?
 ```
-
+Pour s'affranchir de fausses identifications car la trypsine sera présente dans l'échantillon.
 ```
 
 ### Création de la « peak list »
@@ -114,7 +115,7 @@ De nombreux petits logiciels existent pour convertir vos fichiers bruts dans un 
 ##### Les données de QExactive ont été enregistrées en mode centroïde et non pas en mode Profiling. D’après vous quelle est la différence entre les deux modes?
 
 ```
-
+Profiling va réaliser plus d'aquisition de données. Cela va permettre de correctement faire apparaitre un pic et différencier les peptides des bruits. A l'inverse, le mode centroïde ne va présenter qu'un seul pic par ion détectés, le maximum local retenu par un algorithme après traitement du signal. Cela réduit la taille du fichier de sortie.
 ```
 
 ### Identification des peptides par approche PSM Peptide to Spectrum Matching
@@ -137,28 +138,37 @@ NB : si vous avez des messages d’erreur qui s’affichent (missing precursor c
 #### Questions 
 ##### Pourquoi est-il important de bien choisir sa base de données?
 ```
+Car les BDD ne contiennent pas le même nombre d'entrées en fonction de ce qu'elle stock (annotation manuelle ou automatique). Une BDD bien annoté nous donnera moins de résultats mais de meilleur qualité par exemple. Il peut également y avoir de la redondance dans une BDD etc...
 ```
 ##### Est-ce que l’on retrouvera toujours les mêmes protéines au cours du temps ?
 ```
+Non, en fonction de comment est réalisée la recherche dans la BDD, il est possible qu'une protéine similaire ressorte. Cela peut être du à l'homologie et l'orthologie des séquences.
+Mais également car la base évolue avec le temps.
 ```
 
 ##### Comment la taille de la base de données peut affecter le score de la protéine recherchée?
 ```
+Il y aura plus de redondance dans les plus grandes BDD, par exemple des entrées multiples pour le produit d'un seul gène. Certaines protéines ressortiront plus que d'autres.
 ```
 
 ##### Est-ce que les modifications ajoutées sont les seules modifications que l’on peut attendre dans une expérience de shotgun proteomics?
 ```
+Non on peut trouver des modifications post traductionnelles également, celles qui sont ajoutées lors de la formation de la protéine mais que nous ne pouvons pas contrôler.
 ```
 
 ##### Vous avez choisi la trypsine comme enzyme et choisi « specific », qu’est-ce que cela signifie, et comment cela peut affecter le processing ? 
 ```
+Ca permet de s'affranchir d'une mauvaise id. On veut qu'elle coupe bien après lysine et arginine. Si jamais on ne tolère pas une certaine sépcificité on risque une mauvaise id
 ```
 
 ##### Qu’est-ce qu’un missed cleavage ? pourquoi 2 et pas 0 ?
 ```
+Un miss cleavage est présent lorsque la trypsine n'a pas coupé une liaison peptidique après une lysine ou une arginine alors qu'elle aurai du.
+La trypsine n'est pas infaillible et il est donc envisageable qu'elle ait raté quelques sites. Si on baisse le seuil à 0 on risuqe de perdre de l'information.
 ```
 ##### Qu’est-ce que la tolérance en masse, comment la calcule-t-on ?
 ```
+C'est l'écart de masse maximal toléré entre la masse du peptide expérimental et la masse du peptide trouvée dans la BDD. Elle se calcul en fonction de la résolution et de la qualité de la calibration.
 ```
 
 ### Visualisation des PSM, peptides - protéines
@@ -301,7 +311,8 @@ Representer graphiquement les données d'abondance et construire la pvalue des f
 
 ##### 3. A partir de cette échantillon de ratio d'abondance,  estimez la moyenne <img src="https://render.githubusercontent.com/render/math?math=\mu"> et l'ecart-type <img src="https://render.githubusercontent.com/render/math?math=\sigma"> d'une loi normale.
 ```
-
+moyenne = -0.63862621564433
+ecart-type = 0.22142403529812052
 
 ```
 
@@ -316,12 +327,12 @@ scale = len(_)*dx # scale accordingly
 ax.plot(x, norm.pdf(x, mu, sqrt(S_2))*scale) # compute theoritical PDF and draw it
 ```
 
-![Histogramme à inserez ici](histogram_log2FC.png "Title")
+![Histogramme et densité de probabilité](hist.png)
 
 ##### 5. Quelles remarques peut-on faire à l'observation de l'histogramme et de loi théorique?
 
 ```
-
+On voit que l'histogramme est majoritairement déployé dans des valeurs de ratio négatives. Ce qui veut dire qu'il y a moins de protéines produites dans la condition étudiée que dans la condition contrôle. Ce qui est logique car la thétracycline interrompt partiellement la traduction.
 
 ```
 
@@ -335,7 +346,7 @@ Sont condidérées comme surabondantes les proteines remplissant ces deux critè
 * <img src="https://render.githubusercontent.com/render/math?math=\text{Log}_2(\text{abundance ratio})\gt\mu%2B\sigma">  
 * <img src="https://render.githubusercontent.com/render/math?math=\text{p-value}>0.001">
 
-![Volcano plot + quadrant à inserez ici](histogram_log2FC.png "Title")
+![Volcano plot](volcano.png)
 
 ### Analyse Fonctionelle de pathway
 
