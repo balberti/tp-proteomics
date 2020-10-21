@@ -356,9 +356,20 @@ Nous allons implementer une approche ORA (Over Representation Analysis) naive.
 
 Quelles sont leurs identifiants UNIPROT ?
 ``` 
-
-
-
+P0A8V6
+P0A9Q1
+P02358
+P0ACF8
+P62399
+P0A905
+P76506
+P13036
+P10384
+P06971
+P0A910
+P06996
+P76344
+P02931
 ```
 
 #### 2. Lister les termes GO portés par ces protéines surabondates
